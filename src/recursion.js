@@ -7,31 +7,118 @@
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5); // 120
 var factorial = function(n) {
+	if ( n < 0 ) {
+		return null;
+	} else if ( n === 0 ) {
+	    return 1;
+	} else {
+		return n*factorial(n-1);
+	}
 };
 
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
 var sum = function(array) {
+//create variable to save the total
+  var total = 0;
+  var newArray = array.slice();
+//base case return first value in array
+  total += newArray[0];
+//delete first value from array
+  newArray.shift();
+//call the function again
+  if ( array.length !== 0 ) {
+  	return total + sum(newArray);
+  } 
+  return total || 0;
+
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
+
+	// create total variable
+	var total = 0;
+	// add all number value in the array to total
+	for (var i = 0; i < array.length; i++){
+		if ( typeof array[i] === "number" ) {
+			total += array[i];
+		// check if any sub item in array is an array
+		} else if ( Array.isArray(array[i])){
+			//recursively run the same function for inner array
+			total += arraySum(array[i]);
+		}
+		
+	}
+
+	return total;
 };
 
 // 4. Check if a number is even.
 var isEven = function(n) {
+	
+	n = Math.abs(n);
+	//return true if n equals to 0
+	 if ( n - 2 === 0 || n === 0) {
+	  // return true if n minus 2 equals 1
+	  return true;
+	} else if ( n - 2 > 0 ) {
+	//else recursively run the function
+	  return isEven(n-2);
+	}
+
+	//return false by default
+	return false;
+	
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+
+	//check if n is bigger than 0
+	if (n === 0) {
+	  //return current value + next sumBelow if true
+	  return 0;
+	} else if (n > 0) {
+	 //return 0 if false
+	 return n - 1 + sumBelow(n - 1);
+	} else {
+	 return n + 1 + sumBelow(n + 1);
+	}
 };
 
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 var range = function(x, y) {
+
+	var result = [];
+	if ( y - x > 1) {
+	  //base case => reaches y - 1, recursion ends
+	  if ( y - x === 1 ){
+	    result.push(x+1);
+	  } else {
+	    //push number into result array if we haven't reached base case
+	    debugger;
+	    result.push(x+1);
+	    var a =range(x+1, y);
+	    result = result.concat(a);
+	  }
+    } else if (x - y > 1){
+    	if ( x - y === 1 ){
+	    result.push(x-11);
+	  } else {
+	    //push number into result array if we haven't reached base case
+	    debugger;
+	    result.push(x-1);
+	    var a =range(x-1, y);
+	    result = result.concat(a);
+	  }
+    }
+	return result;
+
 };
 
 // 7. Compute the exponent of a number.
